@@ -5,6 +5,9 @@ let alAgua = [];
 let etapaRifa = 0;
 let cantidadAlAgua = 2;
 
+// Participantes bloqueados solamente durante el ciclo actual
+let bloqueadosCiclo = new Set();
+
 // Grados acumulados de las ruletas
 let gradosRifa = 0;
 let gradosJuegos = 0;
@@ -31,6 +34,9 @@ const botonEditarParticipantes =
 
 const botonGirarRifa =
     document.querySelector("#girar-rifa");
+
+const botonGirarRifaGrande =
+    document.querySelector("#girar-rifa-grande");
 
 const ruletaRifa =
     document.querySelector("#ruleta-rifa");
@@ -487,6 +493,7 @@ function prepararNuevaRifa(
     ganadores = [];
     alAgua = [];
     etapaRifa = 0;
+    bloqueadosCiclo.clear();
 
     cantidadAlAgua =
         nuevaCantidadAlAgua;
@@ -629,7 +636,22 @@ if (botonEditarParticipantes) {
         }
     );
 }
+// Permite girar nuevamente desde la ruleta ampliada
+if (botonGirarRifaGrande) {
+    botonGirarRifaGrande.addEventListener(
+        "click",
+        function (evento) {
+            evento.stopPropagation();
 
+            if (
+                !rifaGirando &&
+                botonGirarRifa
+            ) {
+                botonGirarRifa.click();
+            }
+        }
+    );
+}
 // Gira la ruleta de la rifa
 if (botonGirarRifa) {
     botonGirarRifa.addEventListener(
@@ -671,6 +693,7 @@ if (botonGirarRifa) {
             // vuelven a participar en el nuevo ciclo
             if (etapaRifa === 0) {
                 alAgua = [];
+                bloqueadosCiclo.clear();
                 mostrarAlAgua();
 
                 if (
@@ -706,9 +729,9 @@ if (botonGirarRifa) {
                         function (
                             participante
                         ) {
-                            return !alAgua.includes(
-                                participante.valor
-                            );
+                        return !bloqueadosCiclo.has(
+                            String(participante.valor)
+                        );
                         }
                     );
 
@@ -744,6 +767,16 @@ if (botonGirarRifa) {
 
             botonGirarRifa.textContent =
                 "Girando...";
+
+                if (botonGirarRifaGrande) {
+                    botonGirarRifaGrande.disabled = true;
+                    botonGirarRifaGrande.textContent =
+                    "Girando...";
+                }
+
+                if (contenedorRifa) {
+                    contenedorRifa.onclick = null;
+                }
 
             escribirTexto(
                 numeroRuleta,
@@ -814,6 +847,10 @@ if (botonGirarRifa) {
                         opcionSeleccionada
                     );
 
+                    bloqueadosCiclo.add(
+                        String(opcionSeleccionada)
+                    );
+
                     etapaRifa++;
 
                     escribirTexto(
@@ -855,36 +892,45 @@ if (botonGirarRifa) {
                 mostrarAlAgua();
                 mostrarGanadores();
 
+                botonGirarRifa.disabled = false;
                 botonGirarRifa.textContent =
-                    "Resultado";
+                    "Girar ruleta";
 
-                contenedorRifa.style.cursor =
-                    "pointer";
+            if (botonGirarRifaGrande) {
+                botonGirarRifaGrande.disabled = false;
 
-                // Cierra la ruleta grande con un clic
-                contenedorRifa.addEventListener(
-                    "click",
-                    function cerrarRuletaGrande() {
-                        contenedorRifa
-                            .classList.remove(
-                                "destacada"
-                            );
+            if (etapaRifa === 0) {
+                botonGirarRifaGrande.textContent =
+                "Nuevo sorteo";
+            } else {
+                botonGirarRifaGrande.textContent =
+                "Girar otra vez";
+            }
+            }
 
-                        contenedorRifa
-                            .style.cursor =
-                                "default";
+            contenedorRifa.style.cursor =
+                "pointer";
 
-                        botonGirarRifa.disabled =
-                            false;
+                rifaGirando = false;
 
-                        botonGirarRifa
-                            .textContent =
-                                "Girar ruleta";
+            // Cierra la ruleta al hacer clic fuera del botón central
+                contenedorRifa.onclick =
+                function cerrarRuletaGrande(evento) {
+            if (
+                evento.target.closest(
+                "#girar-rifa-grande"
+                )
+        ) {
+            return;
+        }
 
-                        rifaGirando = false;
-                    },
-                    { once: true }
-                );
+        contenedorRifa.classList.remove(
+            "destacada"
+        );
+
+        contenedorRifa.style.cursor =
+            "default";
+    };
             }, 4000);
         }
     );

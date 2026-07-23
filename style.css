@@ -624,7 +624,7 @@ button:disabled,
 
 @media (max-width: 620px) {
     .encabezado {
-        padding: 12px 14px 12px;
+        padding: 12px 14px;
     }
 
     .logo {
@@ -683,4 +683,44 @@ button:disabled,
     #lista-disponibles {
         grid-template-columns: repeat(5, 34px);
     }
+}
+
+/* Botón oculto en la ruleta normal */
+.boton-girar-grande {
+    display: none;
+    width: 82%;
+    max-width: 145px;
+    padding: 9px 6px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #f97b00;
+    color: white;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.1;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(47, 40, 31, 0.28);
+}
+
+/* Organiza el resultado y el botón en el centro */
+.ruleta-rifa-grande.destacada .centro-ruleta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Muestra el botón solamente en la ruleta grande */
+.ruleta-rifa-grande.destacada .boton-girar-grande {
+    display: block;
+}
+
+.boton-girar-grande:hover {
+    background-color: #df4e37;
+}
+
+.boton-girar-grande:disabled {
+    cursor: wait;
+    opacity: 0.65;
 }
