@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta de Juegos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Encabezado con logo y título -->
+    <header class="encabezado">
+        <img src="Imagen/IMG_9189.PNG" alt="Logo ICEC" class="logo">
+        <h1>Ruleta de Juegos</h1>
+        <p>Sortea el nivel del juego</p>
+    </header>
+
+    <main class="contenedor-ruleta">
+        <a href="index.html" class="boton-volver">Volver al inicio</a>
+
+        <!-- Área principal: ruleta a la izquierda y resultado a la derecha -->
+        <section class="layout-juegos">
+            <div class="columna-ruleta">
+                <!-- Ruleta visual de niveles -->
+                <section id="contenedor-juegos" class="ruleta-contenedor">
+                    <div class="flecha"></div>
+
+                    <div id="ruleta-juegos" class="ruleta ruleta-juegos">
+                        <svg class="textos-curvos-juegos" viewBox="0 0 330 330">
+                            <defs>
+                                <path id="curva-experto" d="M 205 75 Q 265 105 270 170"></path>
+                                <path id="curva-medio" d="M 92 235 Q 165 285 238 235"></path>
+                                <path id="curva-facil" d="M 58 170 Q 65 105 125 75"></path>
+                            </defs>
+
+                            <text class="texto-curvo">
+                                <textPath href="#curva-experto" startOffset="50%" text-anchor="middle">Experto</textPath>
+                            </text>
+
+                            <text class="texto-curvo texto-curvo-medio">
+                                <textPath href="#curva-medio" startOffset="50%" text-anchor="middle">Medio</textPath>
+                            </text>
+
+                            <text class="texto-curvo">
+                                <textPath href="#curva-facil" startOffset="50%" text-anchor="middle">Fácil</textPath>
+                            </text>
+                        </svg>
+                    </div>
+
+                    <!-- Centro decorativo -->
+                    <div class="centro-ruleta">
+                        <span class="marca-centro">ICEC</span>
+                    </div>
+                </section>
+
+                <button id="girar-juegos" class="boton-girar">Girar ruleta</button>
+            </div>
+
+            <aside class="panel-resultado-juegos">
+                <p>Resultado</p>
+                <h2 id="resultado-juegos">-</h2>
+            </aside>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

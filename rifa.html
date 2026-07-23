@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta de Rifa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="encabezado">
+        <img src="Imagen/IMG_9189.PNG" alt="Logo ICEC" class="logo">
+        <h1>Ruleta de Rifa</h1>
+        <p>Sortea números, nombres o palabras sin repetir</p>
+    </header>
+
+    <main class="contenedor-ruleta">
+        <a href="index.html" class="boton-volver">Volver al inicio</a>
+
+        <section id="pantalla-carga-rifa" class="pantalla-rifa">
+            <section class="panel-carga-rifa">
+                <h2>Cargar participantes</h2>
+
+                <div class="campos-numeros">
+                    <div>
+                        <label for="numero-inicial">Número inicial</label>
+                        <input type="number" id="numero-inicial" value="1">
+                    </div>
+
+                    <div>
+                        <label for="numero-final">Número final</label>
+                        <input type="number" id="numero-final" value="20">
+                    </div>
+                </div>
+
+                <button id="cargar-numeros">Comenzar con números</button>
+
+                <div class="separador">o</div>
+
+                <label for="lista-palabras">Nombres o palabras</label>
+                <textarea id="lista-palabras" placeholder="Escribe un nombre o palabra por línea"></textarea>
+
+                <button id="cargar-palabras">Comenzar con nombres/palabras</button>
+            </section>
+        </section>
+
+        <section id="pantalla-sorteo-rifa" class="pantalla-rifa oculto">
+            <section class="layout-sorteo-rifa">
+
+                <div class="columna-ruleta">
+                    <section id="contenedor-rifa" class="ruleta-contenedor ruleta-rifa-grande">
+                        <div class="flecha"></div>
+                        <div id="ruleta-rifa" class="ruleta"></div>
+
+                        <div class="centro-ruleta">
+                            <span id="numero-ruleta">?</span>
+                        </div>
+                    </section>
+
+                    <button id="girar-rifa" class="boton-girar">Girar ruleta</button>
+                    <button id="editar-participantes" class="boton-secundario">Editar participantes</button>
+                </div>
+
+                <aside class="panel-resultado-rifa">
+                    <p>Resultado</p>
+                    <h2 id="resultado-rifa">-</h2>
+                    <p id="numeros-restantes">Opciones restantes: 0</p>
+                </aside>
+
+                <aside class="panel-transparencia-rifa">
+                    <section>
+                        <h2>En sorteo</h2>
+                        <ul id="lista-disponibles"></ul>
+                    </section>
+
+                    <section>
+                        <h2>Al agua</h2>
+                        <ul id="lista-agua"></ul>
+                    </section>
+
+                    <section>
+                        <h2>Ganadores</h2>
+                        <ul id="lista-ganadores"></ul>
+                    </section>
+                </aside>
+
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+/* Paleta de colores basada en el logo */
+:root {
+    --dorado: #f9ad18;
+    --dorado-fuerte: #f97b00;
+    --verde: #2f956f;
+    --azul: #2e86a6;
+    --rojo: #df4e37;
+    --morado: #8243a3;
+    --gris-azul: #536b80;
+    --crema: #fff7e8;
+    --blanco: #ffffff;
+    --texto: #2f281f;
+    --borde: #ffc45c;
+    --sombra: 0 12px 28px rgba(120, 80, 10, 0.14);
+}
+
+/* Estilos generales */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background: linear-gradient(180deg, #ffffff 0%, var(--crema) 100%);
+}
+
+/* Encabezado */
+.encabezado {
+    text-align: center;
+    padding: 12px 20px 13px;
+    border-bottom: 5px solid var(--dorado);
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+.logo {
+    width: 76px;
+    display: block;
+    margin: 0 auto 4px;
+}
+
+.encabezado h1 {
+    margin: 0;
+    color: var(--dorado);
+    font-size: clamp(32px, 3vw, 42px);
+    font-weight: 900;
+    line-height: 1.1;
+}
+
+.encabezado p {
+    margin: 4px 0 0;
+    font-size: clamp(17px, 1.6vw, 21px);
+}
+
+/* Fondo con logo transparente */
+.contenedor-principal::before,
+.contenedor-ruleta::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("Imagen/IMG_9189.PNG");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: min(500px, 72vw);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Botones */
+.boton-menu,
+.boton-volver,
+.boton-girar,
+.boton-secundario,
+button {
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--texto);
+    background-color: var(--dorado);
+    font-weight: 800;
+    font-size: 18px;
+    border-radius: 9px;
+    padding: 14px 28px;
+    box-shadow: var(--sombra);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.boton-menu:hover,
+.boton-volver:hover,
+.boton-girar:hover,
+.boton-secundario:hover,
+button:hover {
+    transform: translateY(-2px);
+    background-color: var(--dorado-fuerte);
+}
+
+button:disabled,
+.boton-girar:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.boton-volver {
+    display: block;
+    width: max-content;
+    max-width: 90vw;
+    margin: 0 auto 30px;
+}
+
+.boton-girar {
+    display: block;
+    margin: 26px auto 0;
+    background-color: var(--dorado-fuerte);
+    color: white;
+}
+
+.boton-secundario {
+    display: block;
+    margin: 18px auto 0;
+    background-color: white;
+    color: var(--texto);
+    border: 2px solid var(--dorado);
+    box-shadow: none;
+}
+
+/* Página principal */
+.contenedor-principal {
+    min-height: 65vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 54px 20px;
+}
+
+.caja-menu {
+    background-color: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(249, 173, 24, 0.45);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: var(--sombra);
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.boton-menu:nth-child(2) {
+    background-color: var(--verde);
+    color: white;
+}
+
+/* Contenedor general de páginas con ruleta */
+.contenedor-ruleta {
+    min-height: calc(100vh - 145px);
+    padding: 30px 24px 36px;
+    position: relative;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* Ruleta base */
+.ruleta-contenedor {
+    width: 350px;
+    max-width: 84vw;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    margin: 0 auto;
+    transition: transform 0.25s ease;
+}
+
+.ruleta-contenedor.destacada {
+    transform: scale(1.04);
+}
+
+.ruleta {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 12px solid var(--dorado);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+}
+
+.flecha {
+    position: absolute;
+    top: -23px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 68px solid var(--rojo);
+}
+
+.centro-ruleta {
+    position: absolute;
+    inset: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    background-color: var(--blanco);
+    border: 8px solid var(--dorado);
+    display: grid;
+    place-items: center;
+    z-index: 4;
+}
+
+.centro-ruleta span {
+    color: var(--dorado);
+    font-size: 22px;
+    font-weight: 900;
+    text-align: center;
+    max-width: 90%;
+    overflow-wrap: anywhere;
+}
+
+/* Diseño de juegos */
+.layout-juegos {
+    width: min(100%, 980px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 360px 340px;
+    justify-content: center;
+    align-items: center;
+    gap: 76px;
+}
+
+.columna-ruleta {
+    text-align: center;
+}
+
+.ruleta-juegos {
+    background: conic-gradient(
+        var(--verde) 0deg 120deg,
+        var(--dorado) 120deg 240deg,
+        var(--rojo) 240deg 360deg
+    );
+}
+
+.textos-curvos-juegos {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.texto-curvo {
+    fill: white;
+    font-size: 24px;
+    font-weight: 900;
+    paint-order: stroke;
+    stroke: #2f281f;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+}
+
+.texto-curvo-medio {
+    fill: var(--texto);
+    stroke: white;
+}
+
+.marca-centro {
+    color: var(--dorado) !important;
+    font-size: 22px !important;
+    font-weight: 900;
+}
+
+.panel-resultado-juegos {
+    min-height: 190px;
+    padding: 28px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.88);
+    border: 2px solid var(--borde);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel-resultado-juegos p {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.panel-resultado-juegos h2 {
+    margin: 0;
+    color: var(--dorado);
+    font-size: 34px;
+    font-weight: 900;
+}
+
+/* Carga de rifa */
+.pantalla-rifa {
+    width: 100%;
+}
+
+.panel-carga-rifa {
+    width: min(94vw, 660px);
+    margin: 0 auto;
+    padding: 28px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.86);
+    border: 2px solid var(--borde);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+}
+
+.panel-carga-rifa h2 {
+    margin: 0 0 24px;
+    font-size: 30px;
+}
+
+.campos-numeros {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.campos-numeros div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.panel-carga-rifa label {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.panel-carga-rifa input,
+.panel-carga-rifa textarea {
+    width: 100%;
+    border: 1px solid #b9b0a3;
+    border-radius: 8px;
+    padding: 13px;
+    font-size: 20px;
+    color: var(--texto);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.panel-carga-rifa input {
+    text-align: center;
+}
+
+.panel-carga-rifa textarea {
+    min-height: 140px;
+    resize: vertical;
+    text-align: left;
+    font-family: inherit;
+}
+
+.separador {
+    margin: 22px 0 16px;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--dorado);
+}
+
+/* Sorteo de rifa */
+.layout-sorteo-rifa {
+    width: min(100%, 1500px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 540px 400px 370px;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+/* Amplía la ruleta de rifa mientras está girando */
+.ruleta-rifa-grande.destacada {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: min(82vmin, 760px);
+    max-width: none;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    box-shadow:
+        0 0 0 100vmax rgba(47, 40, 31, 0.65);
+}
+
+/* Aumenta los números durante el giro */
+.ruleta-rifa-grande.destacada .opcion-ruleta {
+    font-size: 11px !important;
+}
+
+/* Resalta la rueda ampliada */
+.ruleta-rifa-grande.destacada .ruleta {
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.38);
+}
+
+/* Borde de la ruleta de rifa */
+.ruleta-rifa-grande .ruleta {
+    border-width: 10px;
+}
+
+/* Centro un poco más pequeño para dejar espacio */
+.ruleta-rifa-grande .centro-ruleta {
+    width: 27%;
+    height: 27%;
+}
+
+/* Números y nombres dentro de la ruleta */
+.opcion-ruleta {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+
+    text-shadow:
+        1px 1px 0 rgba(47, 40, 31, 0.95),
+        -1px -1px 0 rgba(47, 40, 31, 0.95),
+        0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+/* Resultado de rifa */
+.panel-resultado-rifa {
+    min-height: 210px;
+    padding: 26px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.88);
+    border: 2px solid var(--borde);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel-resultado-rifa p {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.panel-resultado-rifa h2 {
+    margin: 0;
+    color: var(--dorado);
+    font-size: 42px;
+    font-weight: 900;
+}
+
+#numeros-restantes {
+    font-size: 18px;
+}
+
+/* Transparencia de rifa */
+.panel-transparencia-rifa {
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.88);
+    border: 2px solid var(--borde);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    display: grid;
+    gap: 14px;
+}
+
+.panel-transparencia-rifa section {
+    background-color: rgba(255, 247, 232, 0.78);
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.panel-transparencia-rifa h2 {
+    margin: 0 0 10px;
+    text-align: center;
+    font-size: 22px;
+}
+
+#lista-disponibles,
+#lista-agua,
+#lista-ganadores {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+#lista-disponibles {
+    display: grid;
+    grid-template-columns: repeat(6, 34px);
+    justify-content: center;
+    gap: 7px;
+}
+
+#lista-agua,
+#lista-ganadores {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+}
+
+.item-disponible {
+    width: 34px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: var(--verde);
+    color: white;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.item-agua {
+    min-width: 96px;
+    padding: 7px 9px;
+    background-color: #e9f6ff;
+    color: #1d6f8c;
+    border: 1px solid #8ed0eb;
+    border-radius: 9px;
+    font-weight: 800;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.item-agua strong {
+    font-size: 17px;
+}
+
+.item-agua span {
+    font-size: 11px;
+    color: #2e86a6;
+    font-weight: 700;
+}
+
+.item-ganador {
+    min-width: 38px;
+    min-height: 32px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    background-color: var(--dorado);
+    color: var(--texto);
+    border: 1px solid var(--dorado-fuerte);
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+}
+
+.item-vacio {
+    color: #73695d;
+    font-weight: 700;
+    text-align: center;
+    padding: 8px;
+}
+
+ /*Adaptación para computadores más pequeños */
+@media (max-width: 1400px) {
+    .layout-sorteo-rifa {
+        grid-template-columns:
+            minmax(420px, 540px)
+            minmax(320px, 400px);
+    }
+
+    .ruleta-rifa-grande {
+        width: min(43vw, 520px);
+    }
+
+    .panel-transparencia-rifa {
+        width: min(92vw, 900px);
+        margin: 0 auto;
+        grid-column: 1 / -1;
+        grid-template-columns: 1.4fr 1fr 1fr;
+    }
+}
+/* Responsive */
+@media (max-width: 950px) {
+    .layout-juegos,
+    .layout-sorteo-rifa {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .panel-resultado-juegos,
+    .panel-resultado-rifa,
+    .panel-transparencia-rifa {
+        width: min(92vw, 430px);
+        margin: 0 auto;
+    }
+
+    .panel-transparencia-rifa {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+    }
+
+    .ruleta-contenedor {
+        width: min(84vw, 340px);
+    }
+
+    .ruleta-rifa-grande {
+        width: min(84vw, 360px);
+    }
+}
+
+@media (max-width: 620px) {
+    .encabezado {
+        padding: 12px 14px 12px;
+    }
+
+    .logo {
+        width: 60px;
+    }
+
+    .encabezado h1 {
+        font-size: 32px;
+    }
+
+    .encabezado p {
+        font-size: 17px;
+    }
+
+    .contenedor-ruleta {
+        padding: 24px 14px 34px;
+    }
+
+    .boton-volver,
+    .boton-girar,
+    .boton-secundario,
+    button {
+        width: 100%;
+        max-width: 310px;
+        font-size: 17px;
+        padding: 14px 20px;
+    }
+
+    .ruleta-contenedor {
+        width: min(84vw, 320px);
+    }
+
+    .ruleta {
+        border-width: 10px;
+    }
+
+    .flecha {
+        top: -18px;
+        border-left-width: 25px;
+        border-right-width: 25px;
+        border-top-width: 56px;
+    }
+
+    .texto-curvo {
+        font-size: 22px;
+    }
+
+    .campos-numeros {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-carga-rifa {
+        padding: 24px 18px;
+    }
+
+    #lista-disponibles {
+        grid-template-columns: repeat(5, 34px);
+    }
+}
